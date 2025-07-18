@@ -7,7 +7,7 @@ class ReadmeJob(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     job_id = Column(String, unique=True, index=True, nullable=False)
-    prompt = Column(Text, nullable=False)
+    prompt = Column(Text, nullable=True)
     status = Column(String, default="pending")  # Options: pending, processing, completed, failed
     error = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

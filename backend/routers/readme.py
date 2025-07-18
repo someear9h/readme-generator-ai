@@ -8,19 +8,21 @@ from db.database import get_db, SessionLocal
 from models.job import ReadmeJob
 from schemas.job import ReadmeCreate, ReadmeJobStatus
 
+from core.readme_generator import ReadmeGenerator
+
 router = APIRouter(
     prefix="/jobs",
     tags=["Jobs"]
 )
 
-# 🍪 Get or create session cookie
+# Get or create session cookie
 def get_session_id(session_id: Optional[str] = Cookie(None)):
     if not session_id:
         session_id = str(uuid.uuid4())
     return session_id
 
 
-# ✅ Create a new README generation job
+# Create a new README generation job
 @router.post("/create", response_model=ReadmeJobStatus)
 def create_readme(
     request: ReadmeCreate,

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 const API_BASE = "http://localhost:8000/api";
@@ -11,7 +11,6 @@ export default function Form({ setReadme }) {
     description: ''
   });
   const [loading, setLoading] = useState(false);
-  const [jobStatus, setJobStatus] = useState(null);  // {job_id, status, ...}
   const pollTimerRef = useRef(null);
 
   const handleChange = (e) => {
@@ -22,8 +21,7 @@ export default function Form({ setReadme }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setReadme("");          // clear old result
-    setJobStatus(null);     // reset status
+    setReadme(""); // Clear previous README
 
     const payload = {
       project_name: form.projectName,
@@ -34,49 +32,46 @@ export default function Form({ setReadme }) {
 
     try {
       const res = await axios.post(`${API_BASE}/jobs/create`, payload);
-      console.log("Job created:", res.data);
-      setJobStatus(res.data);
-
-      // start polling for job completion
-      startPolling(res.data.job_id);
+      const jobId = res.data.job_id;
+      if (jobId) {
+        startPolling(jobId);
+      } else {
+        throw new Error("No job ID returned");
+      }
     } catch (err) {
       console.error("Error creating job:", err);
-      alert("Failed to start README generation. See console.");
+      alert("Failed to start README generation.");
       setLoading(false);
     }
   };
 
   const startPolling = (jobId) => {
-    // clear old timer if any
     if (pollTimerRef.current) clearInterval(pollTimerRef.current);
 
     pollTimerRef.current = setInterval(async () => {
       try {
         const res = await axios.get(`${API_BASE}/jobs/${jobId}`);
-        console.log("Job poll:", res.data);
-        setJobStatus(res.data);
+        const { status, prompt, error } = res.data;
 
-        if (res.data.status === "completed") {
+        if (status === "completed") {
           clearInterval(pollTimerRef.current);
           pollTimerRef.current = null;
           setLoading(false);
-          // backend stores generated markdown in `prompt`
-          setReadme(res.data.prompt || "");
-        } else if (res.data.status === "failed") {
+          setReadme(prompt || "");
+        } else if (status === "failed") {
           clearInterval(pollTimerRef.current);
           pollTimerRef.current = null;
           setLoading(false);
-          alert("README generation failed: " + (res.data.error || "Unknown error"));
+          alert("README generation failed: " + (error || "Unknown error"));
         }
       } catch (err) {
         console.error("Polling error:", err);
-        // don't kill immediately; could be transient
+        // Do not stop immediately on polling error
       }
-    }, 2000); // poll every 2s
+    }, 2000);
   };
 
-  // cleanup on unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (pollTimerRef.current) clearInterval(pollTimerRef.current);
     };
@@ -128,16 +123,6 @@ export default function Form({ setReadme }) {
           {loading ? "Generating..." : "Generate README"}
         </button>
       </form>
-
-      {jobStatus && (
-        <div className="mt-4 text-sm text-gray-300">
-          <div><strong>Job:</strong> {jobStatus.job_id}</div>
-          <div><strong>Status:</strong> {jobStatus.status}</div>
-          {jobStatus.error && (
-            <div className="text-red-400 mt-1">Error: {jobStatus.error}</div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

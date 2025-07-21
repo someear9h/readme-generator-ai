@@ -22,33 +22,7 @@ def get_session_id(session_id: Optional[str] = Cookie(None)):
     return session_id
 
 
-# Create a new README generation job
-@router.post("/create", response_model=ReadmeJobStatus)
-def create_readme(
-    request: ReadmeCreate,
-    background_tasks: BackgroundTasks,
-    response: Response,
-    session_id: str = Depends(get_session_id),
-    db: Session = Depends(get_db)
-):
-    response.set_cookie(key="session_id", value=session_id, httponly=True)
-
-    job_id = str(uuid.uuid4())
-    job = ReadmeJob(
-        job_id=job_id,
-        prompt=request.description,
-        status="pending"
-    )
-    db.add(job)
-    db.commit()
-    db.refresh(job)
-
-    background_tasks.add_task(generate_readme_task, job_id, request)
-
-    return job
-
-
-# ✅ Background task to generate README (mocked here)
+#  Background task to generate README (mocked here)
 def generate_readme_task(job_id: str, request_data: ReadmeCreate):
     db = SessionLocal()
     try:

@@ -33,7 +33,7 @@ def create_readme(
     db.commit()
     db.refresh(job)
 
-    # ✅ Correctly pass all required fields
+    # Correctly pass all required fields
     background_tasks.add_task(
         ReadmeGenerator.generate,
         db,

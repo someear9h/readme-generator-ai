@@ -1,18 +1,18 @@
 # Habit Tracker
 
-A Spring Boot application for managing your daily habits.  Track your progress, set goals, and stay motivated.
+A Spring Boot application built to help you track your habits and visualize your progress with insightful analytics.
 
 ## Introduction
 
-Habit Tracker is a web application built with Spring Boot, Docker, and PostgreSQL that allows users to easily track their habits and monitor their progress over time.  It provides a simple and intuitive interface for adding, editing, and deleting habits, as well as visualizing progress through a user-friendly dashboard.
+Habit Tracker is a web application designed to empower you to build and maintain positive habits.  It provides a simple and intuitive interface to log your daily activities, track your progress over time, and analyze your consistency.  The application is built using a robust technology stack ensuring scalability and maintainability.
 
 ## Features
 
-* **Add and Manage Habits:** Easily create new habits with customizable names, descriptions, and goals.
-* **Track Progress:** Record your daily progress for each habit with simple checkboxes.
-* **Visualize Progress:**  View your progress over time with charts and graphs (future enhancement).
-* **Goal Setting:** Set realistic goals for each habit to stay motivated.
-* **User Authentication:** Secure user accounts to protect your data (future enhancement).
+* **Habit Creation:** Easily add new habits with customizable names, descriptions, and targets.
+* **Daily Logging:**  Log your progress for each habit daily with a simple yes/no or custom value input.
+* **Progress Visualization:**  View your progress with clear charts and graphs, showcasing streaks and overall consistency.
+* **Analytics Dashboard:**  Analyze your habit data to identify patterns and areas for improvement.
+* **User Authentication:** Secure user accounts to protect your data. (Future Enhancement)
 
 
 ## Technologies Used
@@ -20,7 +20,7 @@ Habit Tracker is a web application built with Spring Boot, Docker, and PostgreSQ
 * **Backend:** Spring Boot (Java)
 * **Database:** PostgreSQL
 * **Containerization:** Docker
-* **Frontend:** HTML, CSS (Future enhancements will include a more robust frontend framework)
+* **Frontend:** HTML, CSS, JavaScript (Future Enhancement -  consider expanding with a modern framework like React, Vue, or Angular)
 
 
 ## Getting Started
@@ -29,43 +29,43 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Installation
 
-1. **Clone the repository:**
+1. **Prerequisites:**
+    * Ensure you have Java 11+ installed.
+    * Install Docker and Docker Compose.
+    * Install PostgreSQL (or use the Dockerized version provided).
+
+2. **Clone the Repository:**
 
    ```bash
    git clone <repository_url>
    ```
 
-2. **Database Setup:**
-   * Create a PostgreSQL database.  You can use your preferred method (e.g., `psql`).  The application will require a database named `habit_tracker` (you can modify this in the application properties).
-   * Create a database user with appropriate privileges.
-
-3. **Build the application:**
+3. **Database Setup (Using Docker):**  The application utilizes a Dockerized PostgreSQL instance.  Navigate to the project root directory and run:
 
    ```bash
-   cd habit-tracker
-   mvn clean install
+   docker-compose up -d
+   ```
+   This will start the PostgreSQL container.
+
+4. **Build the Application:**
+
+   ```bash
+   ./mvnw clean package
    ```
 
-4. **Docker Setup:**
-    * Ensure Docker is installed and running on your machine.
-    * Build the Docker image:
-      ```bash
-      docker build -t habit-tracker .
-      ```
-    * Run the Docker container:
-      ```bash
-      docker run -p 8080:8080 habit-tracker
-      ```
-      (Adjust the port mapping if necessary).  You may need to adjust environment variables for database connection details within the docker run command.
+5. **Run the Application:**
 
+   ```bash
+   java -jar target/habit-tracker-*.jar
+   ```
 
 ## Usage
 
-Once the application is running, open your web browser and navigate to `http://localhost:8080` (or the appropriate port if you changed it).  Currently, the application provides basic HTML pages for interaction.  Future enhancements will include a more sophisticated user interface.
+Once the application is running, you can access it through your web browser at `http://localhost:8080` (or the port specified in your application.properties).  (Note:  Currently, the UI is basic HTML. Future iterations will include a more sophisticated user interface).
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE).  (You'll need to create a LICENSE file with the MIT License text.)
 
 
 ## Contributing
@@ -75,11 +75,10 @@ Contributions are welcome! Please feel free to open issues or submit pull reques
 
 ## Future Enhancements
 
-* Implement a more robust and visually appealing frontend using a framework like React or Angular.
+* Implement a robust and user-friendly frontend using a modern JavaScript framework.
 * Add user authentication and authorization.
-* Implement data visualization features (charts and graphs).
-* Add features for setting reminders and notifications.
-* Implement unit and integration tests.
+* Implement more advanced analytics and reporting features.
+* Integrate with other health and fitness tracking applications.
 
 
-Remember to replace `<repository_url>` with the actual Git repository URL.  This README provides a basic structure. You'll need to fill in specifics related to database configuration, environment variables, and other project-specific details.
+This README provides a comprehensive overview of the Habit Tracker project. Remember to replace `<repository_url>` with the actual Git repository URL.  The application currently features a basic HTML frontend; future development will focus on enhancing the user interface and adding more advanced features.

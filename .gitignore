@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 .Python
 adventure-env/
+readme-env/
 venv/
 ENV/
 .venv/

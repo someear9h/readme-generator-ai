@@ -1,9 +1,12 @@
 from typing import List
 from pydantic_settings import BaseSettings
-from pydantic import field_validator
+from pydantic import field_validator, Field
 import os
 
 class Settings(BaseSettings):
+    """
+    Application settings loaded from environment variables.
+    """
     API_PREFIX: str = "/api"
     DEBUG: bool = False
 
@@ -11,17 +14,11 @@ class Settings(BaseSettings):
 
     ALLOWED_ORIGINS: str = ""
 
-    GEMINI_API_KEY: str
+    SECRET_KEY: str = Field(..., description="Secret key for JWT token signing. MUST be a strong, random string.")
+    ALGORITHM: str = "HS256"  # Default algorithm for JWT
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # Default token expiration time in minutes
 
-    # def __init__(self, **values):
-    #     super().__init__(**values)
-    #     if not self.DEBUG:
-    #         db_user = os.getenv("DB_USER")
-    #         db_password = os.getenv("DB_PASSWORD")
-    #         db_host = os.getenv("DB_HOST")
-    #         db_port = os.getenv("DB_PORT")
-    #         db_name = os.getenv("DB_NAME")
-    #         self.DATABASE_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+    GEMINI_API_KEY: str
 
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> List[str]:

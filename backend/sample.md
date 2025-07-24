@@ -1,84 +1,87 @@
-# Habit Tracker
-
-A Spring Boot application built to help you track your habits and visualize your progress with insightful analytics.
+# Smart Parking System
 
 ## Introduction
 
-Habit Tracker is a web application designed to empower you to build and maintain positive habits.  It provides a simple and intuitive interface to log your daily activities, track your progress over time, and analyze your consistency.  The application is built using a robust technology stack ensuring scalability and maintainability.
+The Smart Parking System is a web application designed to streamline the process of finding and reserving parking spaces.  This system leverages modern technologies to provide a user-friendly interface and efficient management of parking resources.  The backend utilizes FastAPI for its speed and efficiency, while Docker ensures easy deployment and portability.  The entire system is designed for scalability and deployment on AWS.
 
 ## Features
 
-* **Habit Creation:** Easily add new habits with customizable names, descriptions, and targets.
-* **Daily Logging:**  Log your progress for each habit daily with a simple yes/no or custom value input.
-* **Progress Visualization:**  View your progress with clear charts and graphs, showcasing streaks and overall consistency.
-* **Analytics Dashboard:**  Analyze your habit data to identify patterns and areas for improvement.
-* **User Authentication:** Secure user accounts to protect your data. (Future Enhancement)
+* **Real-time Parking Availability:** View the current availability of parking spaces in real-time on a map interface.
+* **Reservation System:** Reserve parking spaces in advance, ensuring a spot is waiting when you arrive.
+* **Payment Integration:** Secure online payment processing for reserved parking spaces.  (Future implementation)
+* **User Management:**  User accounts with personalized preferences and parking history. (Future implementation)
+* **Admin Dashboard:** A comprehensive dashboard for managing parking spaces, reservations, and user accounts. (Future implementation)
+* **Intuitive User Interface:**  A clean and easy-to-use web interface for both users and administrators.
 
 
 ## Technologies Used
 
-* **Backend:** Spring Boot (Java)
-* **Database:** PostgreSQL
+* **Backend:** FastAPI (Python)
+* **Frontend:** HTML, JavaScript (Future implementation of more sophisticated frontend framework)
+* **Database:**  (To be specified -  e.g., PostgreSQL, MySQL)  *Currently not implemented.*
 * **Containerization:** Docker
-* **Frontend:** HTML, CSS, JavaScript (Future Enhancement -  consider expanding with a modern framework like React, Vue, or Angular)
+* **Cloud Platform:** AWS (Amazon Web Services)
+* **Programming Languages:** Java (for potential future components), Python
 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+This project is currently under development.  The following instructions outline the setup for the backend FastAPI application.  Frontend development will be detailed in future updates.
 
 ## Installation
 
-1. **Prerequisites:**
-    * Ensure you have Java 11+ installed.
-    * Install Docker and Docker Compose.
-    * Install PostgreSQL (or use the Dockerized version provided).
-
-2. **Clone the Repository:**
+1. **Clone the repository:**
 
    ```bash
    git clone <repository_url>
    ```
 
-3. **Database Setup (Using Docker):**  The application utilizes a Dockerized PostgreSQL instance.  Navigate to the project root directory and run:
+2. **Navigate to the backend directory:**
 
    ```bash
-   docker-compose up -d
+   cd smart-parking-backend
    ```
-   This will start the PostgreSQL container.
 
-4. **Build the Application:**
+3. **Create a virtual environment (recommended):**
 
    ```bash
-   ./mvnw clean package
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
 
-5. **Run the Application:**
+4. **Install dependencies:**
 
    ```bash
-   java -jar target/habit-tracker-*.jar
+   pip install -r requirements.txt
    ```
+
+5. **(Optional) Configure Database:** Set up your chosen database (e.g., PostgreSQL) and update the database connection string in the configuration file.  *Database integration is not yet implemented.*
 
 ## Usage
 
-Once the application is running, you can access it through your web browser at `http://localhost:8080` (or the port specified in your application.properties).  (Note:  Currently, the UI is basic HTML. Future iterations will include a more sophisticated user interface).
+Once the backend is running, you can access it via the specified API endpoints.  Detailed API documentation will be provided in a future release.  The frontend will interact with these endpoints to display parking information and handle user interactions.
+
+To run the FastAPI application:
+
+```bash
+uvicorn main:app --reload
+```
+
+## Docker Deployment (Backend Only)
+
+1. Build the Docker image:
+
+   ```bash
+   docker build -t smart-parking-backend .
+   ```
+
+2. Run the Docker container:
+
+   ```bash
+   docker run -p 8000:8000 smart-parking-backend
+   ```
+
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).  (You'll need to create a LICENSE file with the MIT License text.)
-
-
-## Contributing
-
-Contributions are welcome! Please feel free to open issues or submit pull requests.
-
-
-## Future Enhancements
-
-* Implement a robust and user-friendly frontend using a modern JavaScript framework.
-* Add user authentication and authorization.
-* Implement more advanced analytics and reporting features.
-* Integrate with other health and fitness tracking applications.
-
-
-This README provides a comprehensive overview of the Habit Tracker project. Remember to replace `<repository_url>` with the actual Git repository URL.  The application currently features a basic HTML frontend; future development will focus on enhancing the user interface and adding more advanced features.
+[Specify your license here, e.g., MIT License]  This project is currently under development and the license may change.

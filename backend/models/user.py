@@ -16,11 +16,11 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
 
-    # Relationship to Readme model
-    # Make sure Readme model also has 'owner_id' and 'owner = relationship("User", back_populates="readmes")'
-    # readmes = relationship("Readme", back_populates="owner")
+    # One-to-Many: one user -> many readmes
+    readmes = relationship("Readme", back_populates="owner", cascade="all, delete")
 
-    def __repr__(self):
+
+def __repr__(self):
         """
         String representation for debugging purposes.
         """

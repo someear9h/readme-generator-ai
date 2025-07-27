@@ -1,23 +1,29 @@
 import axios from "axios";
+import { API_BASE_URL } from "../util";
 
-const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+// Register user
+export const register = (data: any) => {
+  return axios.post(`${API_BASE_URL}/register`, data);
+};
 
-export const register = (data: any) =>
-  axios.post(`${API}/register`, data);
-
+// Login user and get token
 export const login = async (username: string, password: string) => {
   const form = new URLSearchParams();
   form.append("username", username);
   form.append("password", password);
 
-  return axios.post(`${API}/token`, form, {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  return axios.post(`${API_BASE_URL}/token`, form, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
   });
 };
 
-export const getCurrentUser = (token: string) =>
-  axios.get(`${API}/me`, {
+// Get current user data using token
+export const getCurrentUser = (token: string) => {
+  return axios.get(`${API_BASE_URL}/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+};

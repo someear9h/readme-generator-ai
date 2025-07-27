@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8000/api"; // adjust if hosted
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 export const register = (data: any) =>
   axios.post(`${API}/register`, data);

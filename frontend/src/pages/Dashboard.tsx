@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+
+
 export default function Dashboard() {
   const [form, setForm] = useState({
     project_name: "",
@@ -15,11 +18,11 @@ export default function Dashboard() {
   };
 
   const generate = async () => {
-    const res = await axios.post("http://localhost:8000/api/jobs/create", form);
+    const res = await axios.post(`${API}/jobs/create`, form);
     const jobId = res.data.job_id;
 
     const interval = setInterval(async () => {
-      const jobStatus = await axios.get(`http://localhost:8000/api/jobs/${jobId}`);
+      const jobStatus = await axios.get(`${API}/jobs/${jobId}`);
       if (jobStatus.data.status === "completed") {
         setReadme(jobStatus.data.prompt);
         clearInterval(interval);
